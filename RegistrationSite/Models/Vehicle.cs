@@ -12,6 +12,7 @@ namespace RegistrationSite.Models
         [Required]
         public int DriverId { get; set; }
         [Required]
+        [Display(Name = "VIN Number")]
         public string VINNumber { get; set; }
         [Required]
         public string Manufacturer { get; set; }
@@ -22,10 +23,13 @@ namespace RegistrationSite.Models
         [Required]
         public int Year { get; set; }
         [Required]
+        [Display(Name = "License Plate")]
         public string LicencePlate { get; set; }
         [Required]
+        [Display(Name = "Sticker Expiry")]
         [DataType(DataType.Date)]
         public DateTime LicenseStickerExpiry { get; set; }
+        [Display(Name = "Primary Driver")]
         public Driver Driver { get; set; }
 
     }
