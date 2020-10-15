@@ -19,7 +19,7 @@ namespace RegistrationSite.Data
                            .HasOne(p => p.Driver)
                            .WithMany(c => c.Vehicles)
                            .HasForeignKey(p => p.DriverId)
-                           .HasConstraintName("FK_Vehicle_DriverId");
+                           .HasConstraintName("FK_Vehicles_DriverId");
         }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)

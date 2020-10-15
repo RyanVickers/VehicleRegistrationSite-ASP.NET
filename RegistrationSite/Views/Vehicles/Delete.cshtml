@@ -13,6 +13,12 @@
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.VINNumber)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.VINNumber)
+        </dd>
+        <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Manufacturer)
         </dt>
         <dd class = "col-sm-10">
@@ -35,12 +41,6 @@
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Year)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Price)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.LicencePlate)

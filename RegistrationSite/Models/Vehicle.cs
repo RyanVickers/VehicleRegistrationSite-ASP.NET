@@ -12,6 +12,8 @@ namespace RegistrationSite.Models
         [Required]
         public int DriverId { get; set; }
         [Required]
+        public string VINNumber { get; set; }
+        [Required]
         public string Manufacturer { get; set; }
         [Required]
         public string Model { get; set; }
@@ -19,8 +21,6 @@ namespace RegistrationSite.Models
         public string Colour { get; set; }
         [Required]
         public int Year { get; set; }
-        [Required]
-        public double Price { get; set; }
         [Required]
         public string LicencePlate { get; set; }
         [Required]

@@ -35,10 +35,13 @@
                 @Html.DisplayNameFor(model => model.PostalCode)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.LicenseNumber)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.LicenseExpiry)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.licenseNumber)
+                @Html.DisplayNameFor(model => model.DriverPhoto)
             </th>
             <th></th>
         </tr>
@@ -68,10 +71,13 @@
                 @Html.DisplayFor(modelItem => item.PostalCode)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.LicenseNumber)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.LicenseExpiry)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.licenseNumber)
+                @Html.DisplayFor(modelItem => item.DriverPhoto)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

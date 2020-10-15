@@ -54,7 +54,7 @@ namespace RegistrationSite.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,DateOfBirth,Address,City,Province,PostalCode,LicenseExpiry,licenseNumber")] Driver driver)
+        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,DateOfBirth,Address,City,Province,PostalCode,LicenseNumber,LicenseExpiry,DriverPhoto")] Driver driver)
         {
             if (ModelState.IsValid)
             {
@@ -86,7 +86,7 @@ namespace RegistrationSite.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,DateOfBirth,Address,City,Province,PostalCode,LicenseExpiry,licenseNumber")] Driver driver)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,DateOfBirth,Address,City,Province,PostalCode,LicenseNumber,LicenseExpiry,DriverPhoto")] Driver driver)
         {
             if (id != driver.Id)
             {
