@@ -8,7 +8,9 @@ namespace RegistrationSite.Models
 {
     public class Vehicle
     {
-        public int VehicleId { get; set; }
+        public int Id { get; set; }
+        [Required]
+        public int DriverId { get; set; }
         [Required]
         public string Manufacturer { get; set; }
         [Required]
@@ -18,10 +20,13 @@ namespace RegistrationSite.Models
         [Required]
         public int Year { get; set; }
         [Required]
+        public double Price { get; set; }
+        [Required]
         public string LicencePlate { get; set; }
         [Required]
-        public double Price { get; set; }
-        public List<Registration> OrderDetails { get; set; }
+        [DataType(DataType.Date)]
+        public DateTime LicenseStickerExpiry { get; set; }
+        public Driver Driver { get; set; }
 
     }
 }

@@ -8,7 +8,8 @@ namespace RegistrationSite.Models
 {
     public class Driver
     {
-        public int DriverId { get; set; }
+        public int Id { get; set; }
+        [Required]
         public string FirstName { get; set; }
         public string LastName { get; set; }
         [DataType(DataType.Date)]
@@ -18,9 +19,9 @@ namespace RegistrationSite.Models
         public string Province { get; set; }
         public string PostalCode { get; set; }
         [DataType(DataType.Date)]
-        public DateTime Expiry { get; set; }
-
-        public List<Registration> OrderDetails { get; set; }
+        public DateTime LicenseExpiry { get; set; }
+        public string licenseNumber { get; set; }
+        public List<Vehicle> Vehicles { get; set; }
 
     }
 }
