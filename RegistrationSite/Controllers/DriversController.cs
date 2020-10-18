@@ -31,16 +31,18 @@ namespace RegistrationSite.Controllers
         [HttpPost]
         public async Task<ActionResult> IndexAsync(IFormFile files)
         {
-            var FilePath = Path.GetTempFileName();
-            var fileName = Guid.NewGuid() + "-" + files.FileName;
-            var uploadPath = System.IO.Directory.GetCurrentDirectory() + "\\wwwroot\\temp\\drivers\\" + fileName;
-            using (var stream = new FileStream(uploadPath, FileMode.Create))
-            {
-                await files.CopyToAsync(stream);
-            }
             if (files != null)
+            {
                 try
                 {
+                    var FilePath = Path.GetTempFileName();
+                    var fileName = Guid.NewGuid() + "-" + files.FileName;
+                    var uploadPath = System.IO.Directory.GetCurrentDirectory() + "\\wwwroot\\temp\\drivers\\" + fileName;
+                    using (var stream = new FileStream(uploadPath, FileMode.Create))
+                    {
+                        await files.CopyToAsync(stream);
+                    }
+
                     {
                         string Data = System.IO.File.ReadAllText(uploadPath);
                         foreach (string row in Data.Split('\n'))
@@ -70,8 +72,10 @@ namespace RegistrationSite.Controllers
                 catch (Exception)
                 {
                     return RedirectToAction(nameof(Index));
-
                 }
+            }
+            else { return RedirectToAction(nameof(Index)); }
+            
             return View();
         }
 
@@ -105,10 +109,21 @@ namespace RegistrationSite.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,DateOfBirth,Address,City,Province,PostalCode,LicenseNumber,LicenseExpiry,DriverPhoto")] Driver driver)
+        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,DateOfBirth,Address,City,Province,PostalCode,LicenseNumber,LicenseExpiry")] Driver driver, IFormFile DriverPhoto)
         {
             if (ModelState.IsValid)
             {
+                if (DriverPhoto.Length > 0)
+                {
+                    var filePath = Path.GetTempFileName();
+                    var fileName = Guid.NewGuid() + "-" + DriverPhoto.FileName;
+                    var uploadPath = System.IO.Directory.GetCurrentDirectory() + "\\wwwroot\\img\\drivers\\" + fileName;
+                    using (var stream = new FileStream(uploadPath, FileMode.Create))
+                    {
+                        await DriverPhoto.CopyToAsync(stream);
+                    }
+                    driver.DriverPhoto = fileName;
+                }
                 _context.Add(driver);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

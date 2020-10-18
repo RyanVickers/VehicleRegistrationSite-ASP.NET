@@ -32,16 +32,18 @@ namespace RegistrationSite.Controllers
         [HttpPost]
         public async Task<ActionResult> IndexAsync(IFormFile files)
         {
-            var FilePath = Path.GetTempFileName();
-            var fileName = Guid.NewGuid() + "-" + files.FileName;
-            var uploadPath = System.IO.Directory.GetCurrentDirectory() + "\\wwwroot\\temp\\vehicles\\" + fileName;
-            using (var stream = new FileStream(uploadPath, FileMode.Create))
-            {
-                await files.CopyToAsync(stream);
-            }
             if (files != null)
+            {
                 try
                 {
+                    var FilePath = Path.GetTempFileName();
+                    var fileName = Guid.NewGuid() + "-" + files.FileName;
+                    var uploadPath = System.IO.Directory.GetCurrentDirectory() + "\\wwwroot\\temp\\vehicles\\" + fileName;
+                    using (var stream = new FileStream(uploadPath, FileMode.Create))
+                    {
+                        await files.CopyToAsync(stream);
+                    }
+
                     {
                         string Data = System.IO.File.ReadAllText(uploadPath);
                         foreach (string row in Data.Split('\n'))
@@ -71,6 +73,8 @@ namespace RegistrationSite.Controllers
                     return RedirectToAction(nameof(Index));
 
                 }
+            }
+            else { return RedirectToAction(nameof(Index)); }
             return View();
         }
         // GET: Vehicles/Details/5
