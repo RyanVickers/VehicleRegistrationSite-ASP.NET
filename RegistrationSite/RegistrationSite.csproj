@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\temp\drivers\" />
+    <Folder Include="wwwroot\temp\vehicles\" />
   </ItemGroup>
 
 </Project>

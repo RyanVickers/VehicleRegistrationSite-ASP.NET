@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -26,6 +28,51 @@ namespace RegistrationSite.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
+        //Gets file from vehicles folder and inputs into database
+        [HttpPost]
+        public async Task<ActionResult> IndexAsync(IFormFile files)
+        {
+            var FilePath = Path.GetTempFileName();
+            var fileName = Guid.NewGuid() + "-" + files.FileName;
+            var uploadPath = System.IO.Directory.GetCurrentDirectory() + "\\wwwroot\\temp\\vehicles\\" + fileName;
+            using (var stream = new FileStream(uploadPath, FileMode.Create))
+            {
+                await files.CopyToAsync(stream);
+            }
+            if (files != null)
+                try
+                {
+                    {
+                        string Data = System.IO.File.ReadAllText(uploadPath);
+                        foreach (string row in Data.Split('\n'))
+                        {
+                            if (!string.IsNullOrEmpty(row))
+                            {
+                                Vehicle vehicle = new Vehicle()
+                                {
+                                    DriverId = Convert.ToInt32(row.Split(',')[0]),
+                                    VINNumber = row.Split(',')[1],
+                                    Manufacturer = row.Split(',')[2],
+                                    Model = row.Split(',')[3],
+                                    Colour = row.Split(',')[4],
+                                    Year = Convert.ToInt32(row.Split(',')[5]),
+                                    LicencePlate = row.Split(',')[6],
+                                    LicenseStickerExpiry = Convert.ToDateTime(row.Split(',')[7]),
+                                };
+                                _context.Vehicles.Add(vehicle);
+                                await _context.SaveChangesAsync();
+                                return RedirectToAction(nameof(Index));
+                            }
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    return RedirectToAction(nameof(Index));
+
+                }
+            return View();
+        }
         // GET: Vehicles/Details/5
         public async Task<IActionResult> Details(int? id)
         {
