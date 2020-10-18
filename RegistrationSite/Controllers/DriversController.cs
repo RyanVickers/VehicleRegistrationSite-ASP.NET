@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -24,6 +26,55 @@ namespace RegistrationSite.Controllers
         {
             return View(await _context.Drivers.ToListAsync());
         }
+
+        //Gets file from drivers folder and inputs into database
+        [HttpPost]
+        public async Task<ActionResult> IndexAsync(IFormFile files)
+        {
+            var FilePath = Path.GetTempFileName();
+            var fileName = Guid.NewGuid() + "-" + files.FileName;
+            var uploadPath = System.IO.Directory.GetCurrentDirectory() + "\\wwwroot\\temp\\drivers\\" + fileName;
+            using (var stream = new FileStream(uploadPath, FileMode.Create))
+            {
+                await files.CopyToAsync(stream);
+            }
+            if (files != null)
+                try
+                {
+                    {
+                        string Data = System.IO.File.ReadAllText(uploadPath);
+                        foreach (string row in Data.Split('\n'))
+                        {
+                            if (!string.IsNullOrEmpty(row))
+                            {
+                                Driver driver = new Driver()
+                                {
+                                    FirstName = row.Split(',')[0],
+                                    LastName = row.Split(',')[1],
+                                    DateOfBirth = Convert.ToDateTime(row.Split(',')[2]),
+                                    Address = row.Split(',')[3],
+                                    City = row.Split(',')[4],
+                                    Province = row.Split(',')[5],
+                                    PostalCode = row.Split(',')[6],
+                                    LicenseNumber = row.Split(',')[7],
+                                    LicenseExpiry = Convert.ToDateTime(row.Split(',')[8]),
+                                    DriverPhoto = row.Split(',')[9],
+                                };
+                                _context.Drivers.Add(driver);
+                                await _context.SaveChangesAsync();
+                                return RedirectToAction(nameof(Index));
+                            }
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    return RedirectToAction(nameof(Index));
+
+                }
+            return View();
+        }
+
 
         // GET: Drivers/Details/5
         public async Task<IActionResult> Details(int? id)
