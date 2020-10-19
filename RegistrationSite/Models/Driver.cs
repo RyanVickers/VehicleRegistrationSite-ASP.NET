@@ -28,6 +28,7 @@ namespace RegistrationSite.Models
         public string Province { get; set; }
         [Required]
         [Display(Name = "Postal Code")]
+        [MaxLength(6)]
         public string PostalCode { get; set; }
         [Required]
         [Display(Name = "License Number")]

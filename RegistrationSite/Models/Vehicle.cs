@@ -10,6 +10,7 @@ namespace RegistrationSite.Models
     {
         public int Id { get; set; }
         [Required]
+        [Display(Name = "Primary Driver")]
         public int DriverId { get; set; }
         [Required]
         [Display(Name = "VIN Number")]
@@ -26,6 +27,7 @@ namespace RegistrationSite.Models
         public int Year { get; set; }
         [Required]
         [Display(Name = "License Plate")]
+        [MaxLength(8)]
         public string LicencePlate { get; set; }
         [Required]
         [Display(Name = "Sticker Expiry")]
