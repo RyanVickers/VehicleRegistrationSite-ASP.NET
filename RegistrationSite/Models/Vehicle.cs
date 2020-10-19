@@ -13,6 +13,7 @@ namespace RegistrationSite.Models
         public int DriverId { get; set; }
         [Required]
         [Display(Name = "VIN Number")]
+        [MaxLength(17)]
         public string VINNumber { get; set; }
         [Required]
         public string Manufacturer { get; set; }
@@ -21,6 +22,7 @@ namespace RegistrationSite.Models
         [Required]
         public string Colour { get; set; }
         [Required]
+        [Range(1900,2020)]
         public int Year { get; set; }
         [Required]
         [Display(Name = "License Plate")]

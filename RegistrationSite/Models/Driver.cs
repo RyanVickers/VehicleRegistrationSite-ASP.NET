@@ -31,6 +31,7 @@ namespace RegistrationSite.Models
         public string PostalCode { get; set; }
         [Required]
         [Display(Name = "License Number")]
+        [MaxLength(15)]
         public string LicenseNumber { get; set; }
         [Required]
         [Display(Name = "License Expiry")]

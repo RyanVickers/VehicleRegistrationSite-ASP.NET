@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="wwwroot\img\drivers\" />
     <Folder Include="wwwroot\temp\drivers\" />
     <Folder Include="wwwroot\temp\vehicles\" />
   </ItemGroup>
