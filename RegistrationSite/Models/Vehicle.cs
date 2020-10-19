@@ -23,7 +23,7 @@ namespace RegistrationSite.Models
         [Required]
         public string Colour { get; set; }
         [Required]
-        [Range(1900,2020)]
+        [Range(1900, 2020)]
         public int Year { get; set; }
         [Required]
         [Display(Name = "License Plate")]

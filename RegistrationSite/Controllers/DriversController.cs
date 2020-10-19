@@ -75,7 +75,7 @@ namespace RegistrationSite.Controllers
                 }
             }
             else { return RedirectToAction(nameof(Index)); }
-            
+
             return View();
         }
 
