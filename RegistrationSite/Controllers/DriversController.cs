@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -12,6 +13,7 @@ using RegistrationSite.Models;
 
 namespace RegistrationSite.Controllers
 {
+    [Authorize]
     public class DriversController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -81,6 +83,7 @@ namespace RegistrationSite.Controllers
 
 
         // GET: Drivers/Details/5
+        [AllowAnonymous]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
