@@ -13,7 +13,7 @@ using RegistrationSite.Models;
 
 namespace RegistrationSite.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Administrator, User")]
     public class DriversController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -24,6 +24,7 @@ namespace RegistrationSite.Controllers
         }
 
         // GET: Drivers
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Drivers.ToListAsync());
@@ -83,7 +84,7 @@ namespace RegistrationSite.Controllers
 
 
         // GET: Drivers/Details/5
-        [AllowAnonymous]
+    
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)

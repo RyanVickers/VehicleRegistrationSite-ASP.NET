@@ -6,82 +6,95 @@
 }
 
 <h1>Index</h1>
-
-<p>
-    <a class="btn btn-primary btn-block" asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.VINNumber)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Manufacturer)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Model)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Colour)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Year)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LicencePlate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LicenseStickerExpiry)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Driver)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.VINNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Manufacturer)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Model)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Colour)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Year)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LicencePlate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LicenseStickerExpiry)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Driver.FirstName)
-            </td>
-            <td>
-                <a class="btn btn-light btn-sm" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-                <a class="btn btn-light btn-sm" asp-action="Details" asp-route-id="@item.Id">Details</a>
-                <a class="btn btn-light btn-sm" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
+@if (User.Identity.IsAuthenticated)
+{
+    <p>
+        <a class="btn btn-primary btn-block" asp-action="Create">Create New</a>
+    </p>
 }
-    </tbody>
-</table>
-<form method="post" enctype="multipart/form-data" asp-controller="Vehicles" asp-action="Index">
-    <div class="custom-file">
-        <input class="custom-file-input" name="files" type="file" id="customFile" />
-        <label class="custom-file-label" for="customFile">Choose file</label>
-    </div>
-    <div class="form-group">
-        <input class="btn btn-success btn-block" type="submit" value="Upload New Vehicle" />
-    </div>
-</form>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.VINNumber)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Manufacturer)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Model)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Colour)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Year)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LicencePlate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LicenseStickerExpiry)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Driver)
+                </th>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <th></th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.VINNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Manufacturer)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Model)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Colour)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Year)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LicencePlate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LicenseStickerExpiry)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Driver.FirstName)
+                    </td>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+
+                        <td>
+                            <a class="btn btn-light btn-sm" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                            <a class="btn btn-light btn-sm" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                            <a class="btn btn-light btn-sm" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <form method="post" enctype="multipart/form-data" asp-controller="Vehicles" asp-action="Index">
+            <div class="custom-file">
+                <input class="custom-file-input" name="files" type="file" id="customFile" />
+                <label class="custom-file-label" for="customFile">Choose file</label>
+            </div>
+            <div class="form-group">
+                <input class="btn btn-success btn-block" type="submit" value="Upload New Vehicle" />
+            </div>
+        </form>
+    }
