@@ -47,7 +47,6 @@ namespace RegistrationSiteTest
         {
             var result = controller.Index();
             var viewResult = (ViewResult)result.Result;
-
             Assert.AreEqual("Index", viewResult.ViewName);
         }
 
@@ -64,20 +63,17 @@ namespace RegistrationSiteTest
         public void DetailsMissingId()
         {
             var result = controller.Details(null).Result;
-
             Assert.IsInstanceOfType(result, typeof(NotFoundResult));
         }
         [TestMethod]
         public void DetailsInvalidId()
         {
             var result = controller.Details(400).Result;
-
             Assert.IsInstanceOfType(result, typeof(NotFoundResult));
         }
         [TestMethod]
         public void DetailsValidIdLoadsDriver()
         {
-
             var result = controller.Details(10).Result;
             var viewResult = (ViewResult)result;
             Assert.AreEqual(drivers[0], viewResult.Model);
@@ -87,7 +83,6 @@ namespace RegistrationSiteTest
         public void CreateLoadsView()
         {
             ViewResult result = (ViewResult)controller.Create();
-
             Assert.AreEqual("Create", result.ViewName);
         }
 
@@ -96,12 +91,9 @@ namespace RegistrationSiteTest
         {
 
             Driver invalidDriver = new Driver();
-
             controller.ModelState.AddModelError("Error", "Fake Error");
-
             var result = controller.Create(invalidDriver, file);
             var viewResult = (ViewResult)result.Result;
-
             Assert.AreEqual("Create", viewResult.ViewName);
         }
 
@@ -111,7 +103,6 @@ namespace RegistrationSiteTest
             var driver1 = new Driver { Id = 120, FirstName = "Ryan", LastName = "Vickers", DateOfBirth = new DateTime(2001, 07, 05), Address = "Sideroad 25", City = "Meaford", Province = "Ontario", PostalCode = "N461W3", LicenseNumber = "V1000G7DHF44VVD", LicenseExpiry = System.DateTime.Now };
 
             var result = controller.Create(driver1, file);
-
             Assert.AreEqual(_context.Drivers.Last(), driver1);
         }
 
@@ -123,7 +114,6 @@ namespace RegistrationSiteTest
 
             var result = controller.Create(driver1, file);
             var redirectResult = (RedirectToActionResult)result.Result;
-
             Assert.AreEqual("Index", redirectResult.ActionName);
         }
 
@@ -132,7 +122,6 @@ namespace RegistrationSiteTest
         public void EditNoId()
         {
             var result = controller.Edit(null).Result;
-
             Assert.IsInstanceOfType(result, typeof(NotFoundResult));
         }
 
@@ -140,14 +129,12 @@ namespace RegistrationSiteTest
         public void EditIdMisMatch()
         {
             var result = controller.Edit(1,drivers[1]).Result;
-
             Assert.IsInstanceOfType(result, typeof(NotFoundResult));
         }
 
         [TestMethod]
         public void EditValidId()
         {
-
             var result = controller.Edit(10);
             var viewResult = (ViewResult)result.Result;
             Assert.AreEqual("Edit", viewResult.ViewName);
@@ -156,7 +143,6 @@ namespace RegistrationSiteTest
         public void EditInvalidId()
         {
             var result = controller.Edit(400).Result;
-
             Assert.IsInstanceOfType(result, typeof(NotFoundResult));
         }
        
@@ -165,10 +151,7 @@ namespace RegistrationSiteTest
         {
             var result = controller.Edit(10,drivers[0]);
             var redirectResult = (RedirectToActionResult)result.Result;
-
             Assert.AreEqual("Index", redirectResult.ActionName);
-           
-
         }
       
         [TestMethod]
@@ -181,19 +164,16 @@ namespace RegistrationSiteTest
 
         }
 
-
         //Delete
         [TestMethod]
         public void DeleteNoId()
         {
             var result = controller.Delete(null).Result;
-
             Assert.IsInstanceOfType(result, typeof(NotFoundResult));
         }
         [TestMethod]
         public void DeleteValidId()
         {
-
             var result = controller.Delete(10);
             var viewResult = (ViewResult)result.Result;
             Assert.AreEqual("Delete", viewResult.ViewName);
@@ -202,19 +182,17 @@ namespace RegistrationSiteTest
         public void DeleteInvalidId()
         {
             var result = controller.Delete(400).Result;
-
             Assert.IsInstanceOfType(result, typeof(NotFoundResult));
         }
 
       //Delete confirmed
+  
         [TestMethod]
-        public void DeleteConfirmedInvalidId()
+        public void DeleteConfirmedValidId()
         {
-            
             var result = controller.DeleteConfirmed(10).Result;
             var redirectResult = (RedirectToActionResult)result;
-
-            Assert.AreEqual("Index",redirectResult.ActionName);
+            Assert.AreEqual("Index", redirectResult.ActionName);
         }
 
         [TestMethod]
