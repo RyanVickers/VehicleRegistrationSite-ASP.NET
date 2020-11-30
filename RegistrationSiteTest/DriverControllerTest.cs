@@ -19,7 +19,7 @@ namespace RegistrationSiteTest
         private ApplicationDbContext _context;
         List<Driver> drivers = new List<Driver>();
         DriversController controller;
-        IFormFile file = new FormFile(new MemoryStream(Encoding.UTF8.GetBytes("This is a dummy file")), 0, 0, "Data", "dummy.txt");
+        IFormFile file = new FormFile(new MemoryStream(Encoding.UTF8.GetBytes("Test file")), 0, 0, "Data", "file.txt");
         [TestInitialize]
         public void TestInitialize()
         {
@@ -82,7 +82,7 @@ namespace RegistrationSiteTest
             var viewResult = (ViewResult)result;
             Assert.AreEqual(drivers[0], viewResult.Model);
         }
-        //CREATE
+        //Create
         [TestMethod]
         public void CreateLoadsView()
         {
@@ -124,7 +124,6 @@ namespace RegistrationSiteTest
             var result = controller.Create(driver1, file);
             var redirectResult = (RedirectToActionResult)result.Result;
 
-            // assert
             Assert.AreEqual("Index", redirectResult.ActionName);
         }
 
@@ -182,6 +181,7 @@ namespace RegistrationSiteTest
 
         }
 
+
         //Delete
         [TestMethod]
         public void DeleteNoId()
@@ -217,6 +217,12 @@ namespace RegistrationSiteTest
             Assert.AreEqual("Index",redirectResult.ActionName);
         }
 
+        [TestMethod]
+        public void DriverExistsReturnsBool()
+        {
+            var result = controller.DriverExists(0);
+            Assert.IsInstanceOfType(result, typeof(bool));
+        }
 
     }
 }
