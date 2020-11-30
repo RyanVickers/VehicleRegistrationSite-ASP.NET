@@ -27,7 +27,7 @@ namespace RegistrationSite.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Drivers.ToListAsync());
+            return View("Index",await _context.Drivers.ToListAsync());
         }
 
         //Gets file from drivers folder and inputs into database
@@ -105,7 +105,7 @@ namespace RegistrationSite.Controllers
         // GET: Drivers/Create
         public IActionResult Create()
         {
-            return View();
+            return View("Create");
         }
 
         // POST: Drivers/Create
@@ -132,7 +132,7 @@ namespace RegistrationSite.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(driver);
+            return View("Create",driver);
         }
 
         // GET: Drivers/Edit/5
@@ -148,7 +148,7 @@ namespace RegistrationSite.Controllers
             {
                 return NotFound();
             }
-            return View(driver);
+            return View("Edit",driver);
         }
 
         // POST: Drivers/Edit/5
@@ -181,9 +181,9 @@ namespace RegistrationSite.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index");
             }
-            return View(driver);
+            return View("Edit",driver);
         }
 
         // GET: Drivers/Delete/5
@@ -201,7 +201,7 @@ namespace RegistrationSite.Controllers
                 return NotFound();
             }
 
-            return View(driver);
+            return View("Delete",driver);
         }
 
         // POST: Drivers/Delete/5
@@ -212,10 +212,10 @@ namespace RegistrationSite.Controllers
             var driver = await _context.Drivers.FindAsync(id);
             _context.Drivers.Remove(driver);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index");
         }
 
-        private bool DriverExists(int id)
+        public bool DriverExists(int id)
         {
             return _context.Drivers.Any(e => e.Id == id);
         }
